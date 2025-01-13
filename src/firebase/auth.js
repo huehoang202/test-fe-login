@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  OAuthProvider, 
 } from "firebase/auth";
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
@@ -38,6 +39,20 @@ export const doSignInWithFacebook = async () => {
   } catch (error) {
     console.error("Error during Facebook sign-in: ", error);
     throw error; // Optionally propagate the error for the caller to handle
+  }
+};
+
+export const doSignInWithApple = async () => {
+  const provider = new OAuthProvider("apple.com"); 
+  try {
+    const result = await signInWithPopup(auth, provider);
+    console.log("Apple sign-in result: ", result.user);
+    const user = result.user;
+
+    // Thêm logic xử lý người dùng hoặc lưu vào Firestore
+  } catch (error) {
+    console.error("Error during Apple sign-in: ", error);
+    throw error;
   }
 };
 
